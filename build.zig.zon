@@ -1,0 +1,10 @@
+.{
+  .name = "pcre2",
+  .version = "1.0.0",
+  .paths = .{
+    "lib",
+    "src",
+    "build.zig",
+    "build.zig.zon",
+  },
+}
