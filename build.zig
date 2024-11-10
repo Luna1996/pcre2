@@ -85,7 +85,6 @@ pub fn build(b: *std.Build) !void {
     .optimize = optimize,
   });
   pcre2_raw.defineCMacro("PCRE2_CODE_UNIT_WIDTH", @tagName(codeUnitWidth));
-  // b.addInstallFile(pcre2_raw.getOutput(), "../src");
 
   const pcre2_mod = b.addModule("pcre2", .{
     .root_source_file = b.path("src/root.zig"),
@@ -96,11 +95,12 @@ pub fn build(b: *std.Build) !void {
   pcre2_mod.linkLibrary(pcre2_lib);
   pcre2_mod.addImport("c", pcre2_raw.createModule());
 
+  const test_step = b.step("test", "build unit tests executable");
   const pcre2_test = b.addTest(.{
     .root_source_file = b.path("test/root.zig"),
     .target = target,
     .optimize = optimize,
   });
   pcre2_test.root_module.addImport("pcre2", pcre2_mod);
-  b.installArtifact(pcre2_test);
+  test_step.dependOn(&b.addInstallArtifact(pcre2_test, .{}).step);
 }
