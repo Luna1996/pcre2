@@ -86,7 +86,7 @@ pub fn build(b: *std.Build) !void {
   });
   pcre2_raw.defineCMacro("PCRE2_CODE_UNIT_WIDTH", @tagName(codeUnitWidth));
 
-  const pcre2_mod = b.addModule("pcre2", .{
+  const pcre2_mod = b.addModule("root", .{
     .root_source_file = b.path("src/root.zig"),
     .target = target,
     .optimize = optimize,
