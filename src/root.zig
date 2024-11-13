@@ -83,6 +83,7 @@ pub const MatchIterator = struct {
   options: e.MatchOptions = .{},
 
   pub fn next(self: *Self) e.MatchError!?Match {
+    if (self.start >= self.text.len) return null;
     if (try self.regex.matchWithOptions(self.text[self.start..], self.options)) |match| {
       self.start += match.ovec[0][1];
       return match;
